@@ -3,9 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  height: 80%;
 }
 
 form {
   width: 80%;
+}
+
+.purple {
+  color: blueviolet;
 }
