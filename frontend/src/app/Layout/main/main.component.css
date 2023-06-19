@@ -1,0 +1,12 @@
+.mainLayout {
+  height: 100vh;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mainLayout > main,
+.mainLayout > aside,
+.mainLayout > section {
+  grid-column: span 1;
+}
