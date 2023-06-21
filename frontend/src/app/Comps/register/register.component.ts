@@ -22,8 +22,9 @@ export class RegisterComponent {
 
   constructor(private CitiesService: CitiesService) {}
   ngOnInit() {
-    this.CitiesService.getCitiesAction().subscribe((cities) => {
-      this.cityNames = this.cityNames.concat(cities);
+    this.CitiesService.getCitiesAction().subscribe((cities: string[]) => {
+      const lowerCaseCities = cities.map((city) => city.toLowerCase());
+      this.cityNames = this.cityNames.concat(lowerCaseCities);
       this.cityNames = this.cityNames.filter((city) => city !== ' ');
     });
   }
@@ -47,6 +48,7 @@ export class RegisterComponent {
       console.log(form2.value);
     } else {
       form2.controls['city'].markAsTouched();
+      form2.controls['street'].markAsTouched();
     }
   }
 }

@@ -142,8 +142,21 @@
             type="text"
             class="form-control"
             placeholder="Your Street *"
-            value=""
+            [(ngModel)]="street"
+            name="street"
+            required
+            #streetField="ngModel"
           />
+        </div>
+        <div
+          *ngIf="
+            streetField.invalid && (streetField.dirty || streetField.touched)
+          "
+          class="alert"
+        >
+          <div *ngIf="streetField.errors?.['required']">
+            Street is required.
+          </div>
         </div>
         <div class="form-group">
           <input
