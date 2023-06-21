@@ -1,6 +1,8 @@
+import { UsersService } from './../../services/users.service';
 import { CitiesService } from '../../services/cities.service';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { User } from 'src/app/Models/User';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +22,10 @@ export class RegisterComponent {
   step1Submitted = false;
   cityNames: string[] = [];
 
-  constructor(private CitiesService: CitiesService) {}
+  constructor(
+    private CitiesService: CitiesService,
+    private UsersService: UsersService
+  ) {}
   ngOnInit() {
     this.CitiesService.getCitiesAction().subscribe((cities: string[]) => {
       const lowerCaseCities = cities.map((city) => city.toLowerCase());
@@ -45,7 +50,20 @@ export class RegisterComponent {
 
   onSub2(form2: NgForm) {
     if (form2.valid) {
-      console.log(form2.value);
+      const newUser: User = new User(
+        this.firstName,
+        this.lastName,
+        this.email,
+        this.idNumber!,
+        this.password,
+        this.city!,
+        this.street,
+        'user'
+      );
+      this.UsersService.addUserAction(newUser).subscribe(
+        (response) => console.log('new user added'),
+        (error) => console.log('Failed to add user: ', error)
+      );
     } else {
       form2.controls['city'].markAsTouched();
       form2.controls['street'].markAsTouched();
