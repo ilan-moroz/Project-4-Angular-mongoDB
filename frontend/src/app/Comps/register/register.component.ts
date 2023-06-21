@@ -10,6 +10,7 @@ export class RegisterComponent {
   idNumber?: number;
   email: string = '';
   password: string = '';
+  confirmPassword: string = '';
   city: string = '';
   street: string = '';
   firstName: string = '';
@@ -22,6 +23,7 @@ export class RegisterComponent {
       form.controls['idNumber'].markAsTouched();
       form.controls['email'].markAsTouched();
       form.controls['password'].markAsTouched();
+      form.controls['confirmPassword'].markAsTouched();
       console.log('Form is not valid!');
     }
   }

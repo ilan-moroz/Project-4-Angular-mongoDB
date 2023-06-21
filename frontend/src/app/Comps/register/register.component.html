@@ -81,8 +81,28 @@
             type="password"
             class="form-control"
             placeholder="Confirm Password *"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            [pattern]="password"
+            #confirmPasswordField="ngModel"
+            required
           />
         </div>
+        <div
+          *ngIf="
+            confirmPasswordField.invalid &&
+            (confirmPasswordField.dirty || confirmPasswordField.touched)
+          "
+          class="alert"
+        >
+          <div *ngIf="confirmPasswordField.errors?.['required']">
+            Confirm Password is required.
+          </div>
+          <div *ngIf="confirmPasswordField.errors?.['pattern']">
+            Passwords do not match.
+          </div>
+        </div>
+
         <div class="form-group">
           <input type="submit" class="btnSubmit" value="Next" />
         </div>
