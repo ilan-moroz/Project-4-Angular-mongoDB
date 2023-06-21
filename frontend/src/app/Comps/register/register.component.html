@@ -20,6 +20,7 @@
             [(ngModel)]="idNumber"
             required
             #idNumberField="ngModel"
+            [disabled]="step1Submitted"
           />
         </div>
         <div
@@ -43,6 +44,7 @@
             required
             pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
             #emailField="ngModel"
+            [disabled]="step1Submitted"
           />
         </div>
         <div
@@ -63,6 +65,7 @@
             [(ngModel)]="password"
             required
             #passwordField="ngModel"
+            [disabled]="step1Submitted"
           />
         </div>
         <div
@@ -86,6 +89,7 @@
             [pattern]="password"
             #confirmPasswordField="ngModel"
             required
+            [disabled]="step1Submitted"
           />
         </div>
         <div
@@ -102,13 +106,14 @@
             Passwords do not match.
           </div>
         </div>
-
-        <div class="form-group">
-          <input type="submit" class="btnSubmit" value="Next" />
+        <div *ngIf="step === 1">
+          <div class="form-group">
+            <input type="submit" class="btnSubmit" value="Next" />
+          </div>
         </div>
       </form>
     </div>
-    <div class="col-md-6 login-form-2">
+    <div *ngIf="step === 2" class="col-md-6 login-form-2">
       <h3>Register</h3>
       <form>
         <div class="form-group">

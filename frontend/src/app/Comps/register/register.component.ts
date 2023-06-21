@@ -15,9 +15,13 @@ export class RegisterComponent {
   street: string = '';
   firstName: string = '';
   lastName: string = '';
+  step = 1;
+  step1Submitted = false;
 
   onSub(form: NgForm) {
     if (form.valid) {
+      this.step += 1;
+      this.step1Submitted = true;
       console.log(form.value);
     } else {
       form.controls['idNumber'].markAsTouched();
