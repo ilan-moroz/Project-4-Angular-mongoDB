@@ -1,4 +1,4 @@
-import { CitiesService } from './../../services/cities.service';
+import { CitiesService } from '../../services/cities.service';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
