@@ -3,6 +3,7 @@ import { CitiesService } from '../../services/cities.service';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/Models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,8 @@ export class RegisterComponent {
 
   constructor(
     private CitiesService: CitiesService,
-    private UsersService: UsersService
+    private UsersService: UsersService,
+    private router: Router
   ) {}
   ngOnInit() {
     this.CitiesService.getCitiesAction().subscribe((cities: string[]) => {
@@ -60,7 +62,10 @@ export class RegisterComponent {
         'user'
       );
       this.UsersService.addUserAction(newUser).subscribe(
-        (response) => console.log('new user added', response),
+        (response) => {
+          console.log('new user added', response);
+          this.router.navigate(['']);
+        },
         (error) => console.log('Failed to add user: ', error)
       );
     } else {
