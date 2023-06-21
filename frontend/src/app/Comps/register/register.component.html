@@ -115,7 +115,7 @@
     </div>
     <div *ngIf="step === 1" class="col-md-6 login-form-2">
       <h3>Register</h3>
-      <form>
+      <form #form2="ngForm" (ngSubmit)="onSub2(form2)">
         <div class="form-group">
           <select
             class="form-control"
@@ -123,12 +123,19 @@
             [(ngModel)]="city"
             name="city"
             required
+            #cityField="ngModel"
           >
             <option [value]="null" disabled selected>Your City *</option>
-            <option *ngFor="let city of cityNames" [value]="city">
-              {{ city }}
+            <option *ngFor="let cityName of cityNames" [value]="cityName">
+              {{ cityName }}
             </option>
           </select>
+        </div>
+        <div
+          *ngIf="cityField.invalid && (cityField.dirty || cityField.touched)"
+          class="alert"
+        >
+          <div *ngIf="cityField.errors?.['required']">City is required.</div>
         </div>
         <div class="form-group">
           <input

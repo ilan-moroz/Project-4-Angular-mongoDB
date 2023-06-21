@@ -41,4 +41,8 @@ export class RegisterComponent {
       console.log('Form is not valid!');
     }
   }
+
+  onSub2(form2: NgForm) {
+    form2.controls['city'].markAsTouched();
+  }
 }
