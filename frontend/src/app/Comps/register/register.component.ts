@@ -12,7 +12,7 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
-  city: string = '';
+  city: string | null = null;
   street: string = '';
   firstName: string = '';
   lastName: string = '';
@@ -22,10 +22,10 @@ export class RegisterComponent {
 
   constructor(private CitiesService: CitiesService) {}
   ngOnInit() {
-    this.CitiesService.getCitiesAction().subscribe((cities) =>
-      this.cityNames.push(cities)
-    );
-    console.log(this.cityNames);
+    this.CitiesService.getCitiesAction().subscribe((cities) => {
+      this.cityNames = this.cityNames.concat(cities);
+      this.cityNames = this.cityNames.filter((city) => city !== ' ');
+    });
   }
 
   onSub(form: NgForm) {
