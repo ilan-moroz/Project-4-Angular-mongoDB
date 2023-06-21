@@ -163,16 +163,44 @@
             type="text"
             class="form-control"
             placeholder="Your Name *"
-            value=""
+            [(ngModel)]="firstName"
+            name="firstName"
+            required
+            #firstNameField="ngModel"
           />
+        </div>
+        <div
+          *ngIf="
+            firstNameField.invalid &&
+            (firstNameField.dirty || firstNameField.touched)
+          "
+          class="alert"
+        >
+          <div *ngIf="firstNameField.errors?.['required']">
+            First name is required.
+          </div>
         </div>
         <div class="form-group">
           <input
             type="text"
             class="form-control"
             placeholder="Your Last Name *"
-            value=""
+            [(ngModel)]="lastName"
+            name="lastName"
+            required
+            #lastNameField="ngModel"
           />
+        </div>
+        <div
+          *ngIf="
+            lastNameField.invalid &&
+            (lastNameField.dirty || lastNameField.touched)
+          "
+          class="alert"
+        >
+          <div *ngIf="lastNameField.errors?.['required']">
+            Last name is required.
+          </div>
         </div>
         <div class="form-group">
           <input type="submit" class="btnSubmit" value="Register" />

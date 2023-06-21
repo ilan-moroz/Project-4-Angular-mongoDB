@@ -49,6 +49,8 @@ export class RegisterComponent {
     } else {
       form2.controls['city'].markAsTouched();
       form2.controls['street'].markAsTouched();
+      form2.controls['firstName'].markAsTouched();
+      form2.controls['lastName'].markAsTouched();
     }
   }
 }
