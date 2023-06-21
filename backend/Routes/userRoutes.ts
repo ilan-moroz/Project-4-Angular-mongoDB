@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { UserModel } from "../Models/Store";
+import { User } from "../Models/User";
 
 const userRouter = express.Router();
 
@@ -7,33 +8,15 @@ const userRouter = express.Router();
 userRouter.post(
   "/addUser",
   (req: Request, res: Response, next: NextFunction) => {
-    const {
-      name,
-      lastName,
-      username,
-      identityCard,
-      password,
-      city,
-      street,
-      role,
-    } = req.body;
-    const newCustomer = new UserModel({
-      name,
-      lastName,
-      username,
-      identityCard,
-      password,
-      city,
-      street,
-      role,
-    });
+    const newUser: User = req.body;
+    const newCustomer = new UserModel(newUser);
     newCustomer
       .save()
       .then((customer) => {
         res.status(201).json(customer);
       })
       .catch((error) => {
-        res.status(500).json({ error: "Failed to create customer" });
+        res.status(500).json({ error: error.message });
       });
   }
 );
