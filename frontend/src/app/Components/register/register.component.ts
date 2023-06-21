@@ -38,7 +38,6 @@ export class RegisterComponent {
     if (form.valid) {
       this.step += 1;
       this.step1Submitted = true;
-      console.log(form.value);
     } else {
       form.controls['idNumber'].markAsTouched();
       form.controls['email'].markAsTouched();
@@ -61,7 +60,7 @@ export class RegisterComponent {
         'user'
       );
       this.UsersService.addUserAction(newUser).subscribe(
-        (response) => console.log('new user added'),
+        (response) => console.log('new user added', response),
         (error) => console.log('Failed to add user: ', error)
       );
     } else {
