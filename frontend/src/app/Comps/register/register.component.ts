@@ -1,3 +1,4 @@
+import { CitiesService } from './../../services/cities.service';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -17,6 +18,15 @@ export class RegisterComponent {
   lastName: string = '';
   step = 1;
   step1Submitted = false;
+  cityNames: string[] = [];
+
+  constructor(private CitiesService: CitiesService) {}
+  ngOnInit() {
+    this.CitiesService.getCitiesAction().subscribe((cities) =>
+      this.cityNames.push(cities)
+    );
+    console.log(this.cityNames);
+  }
 
   onSub(form: NgForm) {
     if (form.valid) {
