@@ -43,6 +43,10 @@ export class RegisterComponent {
   }
 
   onSub2(form2: NgForm) {
-    form2.controls['city'].markAsTouched();
+    if (form2.valid) {
+      console.log(form2.value);
+    } else {
+      form2.controls['city'].markAsTouched();
+    }
   }
 }
