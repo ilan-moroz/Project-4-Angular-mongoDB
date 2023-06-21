@@ -1,10 +1,10 @@
 import { Document, model, Schema } from "mongoose";
 
 export interface User extends Document {
-  name: string;
+  firstName: string;
   lastName: string;
-  username: string;
-  identityCard: string; // Primary key
+  email: string;
+  idNumber: number; // Primary key
   password: string;
   city?: string;
   street?: string;
@@ -51,10 +51,10 @@ export interface Order extends Document {
 }
 
 const UserSchema = new Schema<User>({
-  name: { type: String, required: true },
+  firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  username: { type: String, required: true },
-  identityCard: { type: String, required: true, unique: true }, // Primary key
+  email: { type: String, required: true },
+  idNumber: { type: Number, required: true, unique: true }, // Primary key
   password: { type: String, required: true },
   city: { type: String, required: false },
   street: { type: String, required: false },
