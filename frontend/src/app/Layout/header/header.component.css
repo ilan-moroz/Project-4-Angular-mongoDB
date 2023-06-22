@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "SatisfactoryTopline";
+  src: url("../../../assets/fonts/SatisfactoryTopline-1GAPZ.otf")
+    format("opentype");
+}
+
+.logo {
+  color: blueviolet;
+  display: inline;
+  font-family: SatisfactoryTopline;
+  font-size: 4rem;
+  position: absolute;
+  top: 2rem;
+}
