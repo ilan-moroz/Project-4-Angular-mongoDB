@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { UsersService } from './../../services/users.service';
 import { CitiesService } from '../../services/cities.service';
 import { Component } from '@angular/core';
@@ -26,7 +27,8 @@ export class RegisterComponent {
   constructor(
     private CitiesService: CitiesService,
     private UsersService: UsersService,
-    private router: Router
+    private router: Router,
+    private AuthService: AuthService
   ) {}
   ngOnInit() {
     this.CitiesService.getCitiesAction().subscribe((cities: string[]) => {
@@ -34,6 +36,7 @@ export class RegisterComponent {
       this.cityNames = this.cityNames.concat(lowerCaseCities);
       this.cityNames = this.cityNames.filter((city) => city !== ' ');
     });
+    this.AuthService.isLoggedIn;
   }
 
   onSub(form: NgForm) {
@@ -68,6 +71,7 @@ export class RegisterComponent {
         },
         (error) => console.log('Failed to add user: ', error)
       );
+      this.AuthService.setLoggedIn(true);
     } else {
       form2.controls['city'].markAsTouched();
       form2.controls['street'].markAsTouched();

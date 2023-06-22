@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { UserModel } from "../Models/Store";
 import { User } from "../Models/User";
+import jwt from "jsonwebtoken";
 
 const userRouter = express.Router();
 
@@ -13,7 +14,12 @@ userRouter.post(
     newCustomer
       .save()
       .then((customer) => {
-        res.status(201).json(customer);
+        const token = jwt.sign(
+          { id: customer._id, email: customer.email },
+          "your_secret_key",
+          { expiresIn: "1h" }
+        );
+        res.status(201).json({ customer, token });
       })
       .catch((error) => {
         res.status(500).json({ error: error.message });
