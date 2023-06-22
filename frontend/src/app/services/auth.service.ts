@@ -42,10 +42,4 @@ export class AuthService {
       return false;
     }
   }
-
-  // if (this.AuthService.isTokenExpired()) {
-  //   console.log('expired');
-  // } else {
-  //   console.log('not expired');
-  // }
 }

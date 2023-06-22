@@ -1,10 +1,22 @@
 import { Component } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  loggedIn: boolean = false;
 
+  constructor(private AuthService: AuthService) {}
+
+  ngOnInit() {
+    if (this.AuthService.isTokenExpired()) {
+      console.log('token is expired');
+    } else {
+      this.loggedIn = true;
+      console.log('token is valid');
+    }
+  }
 }
