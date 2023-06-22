@@ -1,7 +1,7 @@
 import { AuthService } from './../../services/auth.service';
 import { UsersService } from './../../services/users.service';
 import { CitiesService } from '../../services/cities.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/Models/User';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   idNumber?: number;
   email: string = '';
   password: string = '';
