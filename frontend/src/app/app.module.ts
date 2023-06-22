@@ -10,6 +10,7 @@ import { InfoComponent } from './Components/info/info.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SessionModalComponent } from './Components/session-modal/session-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     AboutComponent,
     InfoComponent,
     RegisterComponent,
+    SessionModalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
