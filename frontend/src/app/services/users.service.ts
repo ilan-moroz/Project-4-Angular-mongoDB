@@ -10,6 +10,6 @@ export class UsersService {
 
   addUserAction(user: User) {
     const api = `http://localhost:4000/api/v1/mongoStore/user/addUser`;
-    return this.http.post(api, user);
+    return this.http.post<{ customer: User; token: string }>(api, user);
   }
 }

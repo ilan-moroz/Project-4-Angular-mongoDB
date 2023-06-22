@@ -36,7 +36,6 @@ export class RegisterComponent {
       this.cityNames = this.cityNames.concat(lowerCaseCities);
       this.cityNames = this.cityNames.filter((city) => city !== ' ');
     });
-    this.AuthService.isLoggedIn;
   }
 
   onSub(form: NgForm) {
@@ -67,6 +66,7 @@ export class RegisterComponent {
       this.UsersService.addUserAction(newUser).subscribe(
         (response) => {
           console.log('new user added', response);
+          this.AuthService.setLoggedIn(true, response.token);
           this.router.navigate(['']);
         },
         (error) => console.log('Failed to add user: ', error)
