@@ -18,11 +18,6 @@ export class AuthService {
     }
   }
 
-  // check if user is logged in
-  get isLoggedIn() {
-    return localStorage.getItem(this.TOKEN_KEY) !== null;
-  }
-
   // get stored token
   get token(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
