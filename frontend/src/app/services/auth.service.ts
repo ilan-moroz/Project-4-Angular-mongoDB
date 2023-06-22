@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from 'jwt-decode';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
+  private tokenExpiredSubject = new BehaviorSubject<boolean>(false);
+  tokenExpired = this.tokenExpiredSubject.asObservable();
 
-  constructor() {}
-
+  constructor() {
+    setInterval(() => this.checkTokenExpiration(), 1000 * 60); // Check every minute
+  }
   // set user logged in status or logged out
   setLoggedIn(value: boolean, token: string | null = null) {
     if (value && token) {
@@ -41,5 +45,10 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  private checkTokenExpiration() {
+    const tokenExpired = this.isTokenExpired();
+    this.tokenExpiredSubject.next(tokenExpired);
   }
 }
