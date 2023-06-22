@@ -36,11 +36,6 @@ export class RegisterComponent {
       this.cityNames = this.cityNames.concat(lowerCaseCities);
       this.cityNames = this.cityNames.filter((city) => city !== ' ');
     });
-    if (this.AuthService.isTokenExpired()) {
-      console.log('expired');
-    } else {
-      console.log('not expired');
-    }
   }
 
   onSub(form: NgForm) {
