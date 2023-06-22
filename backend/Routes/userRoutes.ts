@@ -17,7 +17,7 @@ userRouter.post(
         const token = jwt.sign(
           { id: customer._id, email: customer.email },
           "your_secret_key",
-          { expiresIn: "1h" }
+          { expiresIn: "1m" }
         );
         res.status(201).json({ customer, token });
       })
