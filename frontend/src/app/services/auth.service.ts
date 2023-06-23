@@ -47,8 +47,14 @@ export class AuthService {
     }
   }
 
+  isLoggedIn(): boolean {
+    return this.token !== null;
+  }
+
   private checkTokenExpiration() {
-    const tokenExpired = this.isTokenExpired();
-    this.tokenExpiredSubject.next(tokenExpired);
+    if (this.isLoggedIn()) {
+      const tokenExpired = this.isTokenExpired();
+      this.tokenExpiredSubject.next(tokenExpired);
+    }
   }
 }
