@@ -5,38 +5,53 @@ import jwt from "jsonwebtoken";
 
 const userRouter = express.Router();
 
-// save a new customer in database and check if email or idNumber already exists
+// save new customer in database
 userRouter.post(
   "/addUser",
-  async (req: Request, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const newUser: User = req.body;
-    const email: string = newUser.email;
-    const idNumber: number = newUser.idNumber;
-
-    try {
-      const existingUser = await UserModel.findOne({
-        $or: [{ email: email }, { idNumber: idNumber }],
+    const newCustomer = new UserModel(newUser);
+    newCustomer
+      .save()
+      .then((customer) => {
+        const token = jwt.sign(
+          { id: customer._id, email: customer.email },
+          "your_secret_key",
+          { expiresIn: "2h" }
+        );
+        res.status(201).json({ customer, token });
+      })
+      .catch((error) => {
+        res.status(500).json({ error: error.message });
       });
+  }
+);
+
+// check if email or idNumber already exists in database
+const checkExistingUser = async (email: string, idNumber: number) => {
+  const existingUser = await UserModel.findOne({
+    $or: [{ email: email }, { idNumber: idNumber }],
+  });
+
+  return existingUser;
+};
+
+userRouter.get(
+  "/checkEmailId/:email/:idNumber",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const email = req.params.email;
+    const idNumber = +req.params.idNumber;
+    try {
+      const existingUser = await checkExistingUser(email, idNumber);
       if (existingUser) {
-        return res.status(400).json({
-          message: "User with provided email or ID number already exists",
+        return res.status(200).json({
+          exists: true,
+        });
+      } else {
+        return res.status(200).json({
+          exists: false,
         });
       }
-
-      const newCustomer = new UserModel(newUser);
-      newCustomer
-        .save()
-        .then((customer) => {
-          const token = jwt.sign(
-            { id: customer._id, email: customer.email },
-            "your_secret_key",
-            { expiresIn: "2h" }
-          );
-          res.status(201).json({ customer, token });
-        })
-        .catch((error) => {
-          res.status(500).json({ error: error.message });
-        });
     } catch (err: any) {
       return res.status(500).json({ error: err.message });
     }

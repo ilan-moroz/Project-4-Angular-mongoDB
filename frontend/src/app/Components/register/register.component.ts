@@ -40,8 +40,16 @@ export class RegisterComponent implements OnInit {
 
   onSub(form: NgForm) {
     if (form.valid) {
-      this.step += 1;
-      this.step1Submitted = true;
+      this.UsersService.checkUserAction(this.email, this.idNumber!).subscribe(
+        (exists) => {
+          if (exists) {
+            console.log('User exists!');
+          } else {
+            this.step += 1;
+            this.step1Submitted = true;
+          }
+        }
+      );
     } else {
       form.controls['idNumber'].markAsTouched();
       form.controls['email'].markAsTouched();
