@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SessionModalComponent } from './Components/session-modal/session-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    MatChipsModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
