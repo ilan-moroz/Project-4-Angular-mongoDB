@@ -5,10 +5,13 @@
 }
 
 .logo {
-  color: blueviolet;
   display: inline;
   font-family: SatisfactoryTopline;
   font-size: 3.5rem;
   position: absolute;
   top: 2.2rem;
+}
+
+.purple {
+  color: blueviolet;
 }
