@@ -84,6 +84,10 @@ export class RegisterComponent implements OnInit {
         (response) => {
           console.log('new user added', response);
           this.AuthService.setLoggedIn(true, response.token);
+          this.UsersService.setUser(
+            response.customer.firstName,
+            response.customer.lastName
+          );
           this.router.navigate(['']);
         },
         (error) => console.log('Failed to add user: ', error)

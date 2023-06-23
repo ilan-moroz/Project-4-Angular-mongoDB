@@ -20,6 +20,11 @@
     <mat-icon style="vertical-align: middle; margin-right: 0.5rem"
       >mood</mat-icon
     >
-    <span style="vertical-align: middle">Hello Guest</span>
+    <span style="vertical-align: middle" *ngIf="userName; else guestGreeting">
+      Hello {{ userName }}
+    </span>
+    <ng-template #guestGreeting>
+      <span style="vertical-align: middle">Hello Guest</span>
+    </ng-template>
   </mat-chip>
 </nav>

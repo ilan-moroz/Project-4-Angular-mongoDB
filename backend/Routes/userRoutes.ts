@@ -19,7 +19,16 @@ userRouter.post(
           "your_secret_key",
           { expiresIn: "2h" }
         );
-        res.status(201).json({ customer, token });
+        res
+          .status(201)
+          .json({
+            customer,
+            token,
+            user: {
+              firstName: customer.firstName,
+              lastName: customer.lastName,
+            },
+          });
       })
       .catch((error) => {
         res.status(500).json({ error: error.message });

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../Models/User';
 import { Observable, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +20,31 @@ export class UsersService {
     return this.http
       .get<{ exists: boolean }>(api)
       .pipe(map((response) => response.exists));
+  }
+
+  private userSubject: BehaviorSubject<{
+    firstName: string;
+    lastName: string;
+  } | null> = new BehaviorSubject<{
+    firstName: string;
+    lastName: string;
+  } | null>(null);
+  public user = this.userSubject.asObservable();
+
+  setUser(firstName: string, lastName: string): void {
+    const user = { firstName, lastName };
+    // Store the user object in the local storage
+    localStorage.setItem('user', JSON.stringify(user));
+    // Emit the new user object so all subscribers get the updated value
+    this.userSubject.next(user);
+  }
+
+  getUser(): { firstName: string; lastName: string } | null {
+    // Try to get the user object from the local storage
+    const user = localStorage.getItem('user');
+    if (!user) {
+      return null;
+    }
+    return JSON.parse(user);
   }
 }
