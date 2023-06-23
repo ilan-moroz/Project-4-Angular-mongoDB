@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/Models/User';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit {
     private CitiesService: CitiesService,
     private UsersService: UsersService,
     private router: Router,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private snackBar: MatSnackBar
   ) {}
   ngOnInit() {
     this.CitiesService.getCitiesAction().subscribe((cities: string[]) => {
@@ -43,7 +45,14 @@ export class RegisterComponent implements OnInit {
       this.UsersService.checkUserAction(this.email, this.idNumber!).subscribe(
         (exists) => {
           if (exists) {
-            console.log('User exists!');
+            this.snackBar.open(
+              'Email or ID number already exists. Please change and try again.',
+              'Close',
+              {
+                duration: 3000,
+                verticalPosition: 'top',
+              }
+            );
           } else {
             this.step += 1;
             this.step1Submitted = true;
