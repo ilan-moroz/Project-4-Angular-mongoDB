@@ -1,8 +1,7 @@
 .MainLayout {
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: 17% 83%;
   grid-template-columns: repeat(6, 1fr);
 }
 
