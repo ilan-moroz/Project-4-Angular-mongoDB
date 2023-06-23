@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly USER_KEY = 'user';
   private tokenExpiredSubject = new BehaviorSubject<boolean>(false);
   tokenExpired = this.tokenExpiredSubject.asObservable();
 
@@ -18,7 +19,7 @@ export class AuthService {
     if (value && token) {
       localStorage.setItem(this.TOKEN_KEY, token);
     } else {
-      localStorage.removeItem(this.TOKEN_KEY);
+      this.clearUserDataAndToken();
     }
   }
 
@@ -54,7 +55,15 @@ export class AuthService {
   private checkTokenExpiration() {
     if (this.isLoggedIn()) {
       const tokenExpired = this.isTokenExpired();
+      if (tokenExpired) {
+        this.clearUserDataAndToken();
+      }
       this.tokenExpiredSubject.next(tokenExpired);
     }
+  }
+
+  private clearUserDataAndToken(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
   }
 }
