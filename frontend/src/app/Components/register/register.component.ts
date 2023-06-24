@@ -60,10 +60,9 @@ export class RegisterComponent implements OnInit {
         }
       );
     } else {
-      form.controls['idNumber'].markAsTouched();
-      form.controls['email'].markAsTouched();
-      form.controls['password'].markAsTouched();
-      form.controls['confirmPassword'].markAsTouched();
+      Object.keys(form.controls).forEach((key) => {
+        form.controls[key].markAsTouched();
+      });
       console.log('Form is not valid!');
     }
   }
@@ -94,10 +93,9 @@ export class RegisterComponent implements OnInit {
       );
       this.AuthService.setLoggedIn(true);
     } else {
-      form2.controls['city'].markAsTouched();
-      form2.controls['street'].markAsTouched();
-      form2.controls['firstName'].markAsTouched();
-      form2.controls['lastName'].markAsTouched();
+      Object.keys(form2.controls).forEach((key) => {
+        form2.controls[key].markAsTouched();
+      });
     }
   }
 }
