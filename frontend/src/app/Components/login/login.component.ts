@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
               response.user.firstName,
               response.user.lastName
             );
+            this.loginForm.reset();
           },
           (error) => {
             // This code will be executed if an error occurs during the HTTP request
