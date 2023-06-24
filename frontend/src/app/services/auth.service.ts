@@ -10,17 +10,20 @@ export class AuthService {
   private readonly USER_KEY = 'user';
   private tokenExpiredSubject = new BehaviorSubject<boolean>(false);
   tokenExpired = this.tokenExpiredSubject.asObservable();
+  private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  public isLoggedIn$ = this.loggedInSubject.asObservable();
 
   constructor() {
     setInterval(() => this.checkTokenExpiration(), 1000 * 60); // Check every minute
   }
-  // set user logged in status or logged out
+  // set user logged in status
   setLoggedIn(value: boolean, token: string | null = null) {
     if (value && token) {
       localStorage.setItem(this.TOKEN_KEY, token);
     } else {
       this.clearUserDataAndToken();
     }
+    this.loggedInSubject.next(value);
   }
 
   // get stored token
@@ -60,6 +63,10 @@ export class AuthService {
       }
       this.tokenExpiredSubject.next(tokenExpired);
     }
+  }
+
+  logout() {
+    this.clearUserDataAndToken();
   }
 
   private clearUserDataAndToken(): void {

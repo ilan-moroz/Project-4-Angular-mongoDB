@@ -3,6 +3,7 @@ import { AuthService } from './../../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from './../../services/users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   loggedIn: boolean = false;
+  private subscription!: Subscription;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -24,12 +26,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.AuthService.isTokenExpired()) {
-      console.log('token is expired');
-    } else {
-      this.loggedIn = true;
-      console.log('token is valid');
-    }
+    this.subscription = this.AuthService.isLoggedIn$.subscribe(
+      (isLoggedIn) => (this.loggedIn = isLoggedIn)
+    );
   }
 
   getEmailErrorMessage() {
@@ -81,5 +80,9 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
       console.log('Invalid form');
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

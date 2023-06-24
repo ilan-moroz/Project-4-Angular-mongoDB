@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,10 @@ export class HeaderComponent implements OnInit {
   userName: string = '';
   userSubscription: Subscription | undefined;
 
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private AuthService: AuthService
+  ) {}
 
   ngOnInit() {
     this.userSubscription = this.userService.user.subscribe((user) => {
@@ -19,6 +23,10 @@ export class HeaderComponent implements OnInit {
         this.userName = `${user.firstName} ${user.lastName}`;
       }
     });
+  }
+
+  logout() {
+    this.AuthService.logout();
   }
 
   ngOnDestroy() {
