@@ -2,14 +2,17 @@ import express, { Request, Response, NextFunction } from "express";
 import { UserModel } from "../Models/Store";
 import { User } from "../Models/User";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const userRouter = express.Router();
 
 // save new customer in database
 userRouter.post(
   "/addUser",
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const newUser: User = req.body;
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(newUser.password, salt);
     const newCustomer = new UserModel(newUser);
     newCustomer
       .save()
