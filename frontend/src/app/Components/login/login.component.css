@@ -5,6 +5,9 @@
   align-items: center;
   height: 80%;
 }
+.input {
+  width: 100%;
+}
 
 form {
   width: 80%;
