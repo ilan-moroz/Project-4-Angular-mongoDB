@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UsersService } from './../../services/users.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,11 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private AuthService: AuthService) {}
+  constructor(
+    private UsersService: UsersService,
+    private AuthService: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     if (this.AuthService.isTokenExpired()) {
@@ -44,10 +50,35 @@ export class LoginComponent implements OnInit {
 
   onSub() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      const emailValue = this.loginForm.controls.email.value;
+      const passwordValue = this.loginForm.controls.password.value;
+      if (emailValue !== null && passwordValue !== null) {
+        this.UsersService.loginAction(emailValue, passwordValue).subscribe(
+          (response) => {
+            this.AuthService.setLoggedIn(true, response.token);
+            this.UsersService.setUser(
+              response.user.firstName,
+              response.user.lastName
+            );
+          },
+          (error) => {
+            // This code will be executed if an error occurs during the HTTP request
+            if (error.status === 400) {
+              this.snackBar.open(
+                'Incorrect email or password. Please verify your details and try again.',
+                'Close',
+                {
+                  duration: 3000,
+                  verticalPosition: 'top',
+                }
+              );
+            }
+          }
+        );
+      }
     } else {
       this.loginForm.markAllAsTouched();
-      console.log('invalid');
+      console.log('Invalid form');
     }
   }
 }

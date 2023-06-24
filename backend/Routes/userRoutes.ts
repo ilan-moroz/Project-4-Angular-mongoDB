@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 
 const userRouter = express.Router();
 
-// save new customer in database
+// register new user in database
 userRouter.post(
   "/register",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -34,6 +34,41 @@ userRouter.post(
       .catch((error) => {
         res.status(500).json({ error: error.message });
       });
+  }
+);
+
+// handle login
+userRouter.post(
+  "/login",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body;
+      // Retrieve user from the database
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: "Invalid email or password" });
+      }
+      // Check if the provided password is correct
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ message: "Invalid email or password" });
+      }
+      // Generate a new JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        "your_secret_key",
+        { expiresIn: "2h" }
+      );
+      res.status(200).json({
+        token,
+        user: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+        },
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   }
 );
 

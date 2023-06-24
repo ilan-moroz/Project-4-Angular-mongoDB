@@ -10,9 +10,18 @@ import { BehaviorSubject } from 'rxjs';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  addUserAction(user: User) {
+  registerAction(user: User) {
     const api = `http://localhost:4000/api/v1/mongoStore/user/register`;
     return this.http.post<{ customer: User; token: string }>(api, user);
+  }
+
+  loginAction(email: string, password: string) {
+    const api = `http://localhost:4000/api/v1/mongoStore/user/login`;
+    const userCredentials = { email, password };
+    return this.http.post<{
+      user: { firstName: string; lastName: string };
+      token: string;
+    }>(api, userCredentials);
   }
 
   checkUserAction(email: string, idNumber: number): Observable<boolean> {

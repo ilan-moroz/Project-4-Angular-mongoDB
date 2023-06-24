@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
         this.street,
         'user'
       );
-      this.UsersService.addUserAction(newUser).subscribe(
+      this.UsersService.registerAction(newUser).subscribe(
         (response) => {
           console.log('new user added', response);
           this.AuthService.setLoggedIn(true, response.token);
