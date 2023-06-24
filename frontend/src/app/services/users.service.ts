@@ -8,7 +8,12 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const storedUser = this.getUser();
+    if (storedUser) {
+      this.userSubject.next(storedUser);
+    }
+  }
 
   registerAction(user: User) {
     const api = `http://localhost:4000/api/v1/mongoStore/user/register`;
