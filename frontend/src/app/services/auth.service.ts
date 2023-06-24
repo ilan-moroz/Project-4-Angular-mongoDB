@@ -67,6 +67,7 @@ export class AuthService {
 
   logout() {
     this.clearUserDataAndToken();
+    this.setLoggedIn(false);
   }
 
   private clearUserDataAndToken(): void {

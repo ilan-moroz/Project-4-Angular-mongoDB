@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
               response.user.firstName,
               response.user.lastName
             );
-            this.loggedIn = true;
           },
           (error) => {
             // This code will be executed if an error occurs during the HTTP request

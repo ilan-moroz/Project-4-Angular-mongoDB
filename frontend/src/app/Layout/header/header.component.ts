@@ -11,6 +11,8 @@ import { AuthService } from './../../services/auth.service';
 export class HeaderComponent implements OnInit {
   userName: string = '';
   userSubscription: Subscription | undefined;
+  loggedIn: boolean = false;
+  loggedSubscription!: Subscription;
 
   constructor(
     private userService: UsersService,
@@ -23,6 +25,9 @@ export class HeaderComponent implements OnInit {
         this.userName = `${user.firstName} ${user.lastName}`;
       }
     });
+    this.loggedSubscription = this.AuthService.isLoggedIn$.subscribe(
+      (isLoggedIn) => (this.loggedIn = isLoggedIn)
+    );
   }
 
   logout() {
@@ -32,6 +37,9 @@ export class HeaderComponent implements OnInit {
   ngOnDestroy() {
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
+    }
+    if (this.loggedSubscription) {
+      this.loggedSubscription.unsubscribe();
     }
   }
 }
