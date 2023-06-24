@@ -8,7 +8,7 @@ const userRouter = express.Router();
 
 // save new customer in database
 userRouter.post(
-  "/addUser",
+  "/register",
   async (req: Request, res: Response, next: NextFunction) => {
     const newUser: User = req.body;
     const salt = await bcrypt.genSalt(10);
