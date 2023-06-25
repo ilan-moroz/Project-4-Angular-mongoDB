@@ -4,6 +4,7 @@ import express from "express";
 import config from "./Utils/Config";
 import userRouter from "./Routes/userRoutes";
 import connect from "./Utils/dalMongoDB";
+import helmet from "helmet";
 
 // Create Server
 const server = express();
@@ -19,6 +20,10 @@ server.use(bodyParser.json());
 
 // How to use routes
 server.use("/api/v1/mongoStore/user", userRouter);
+
+// for security
+server.use(helmet());
+server.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 // Start the server
 server.listen(config.webPort, () => {
