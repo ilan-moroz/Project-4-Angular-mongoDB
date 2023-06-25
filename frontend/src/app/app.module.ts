@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
+import { ShoppingComponent } from './Components/shopping/shopping.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatCardModule } from '@angular/material/card';
     InfoComponent,
     RegisterComponent,
     SessionModalComponent,
+    ShoppingComponent,
   ],
   imports: [
     BrowserModule,
