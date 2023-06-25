@@ -1,4 +1,17 @@
-<div class="centerForm" *ngIf="!loggedIn">
+<div *ngIf="loggedIn" class="center">
+  <mat-card class="custom-card">
+    <mat-card-content>
+      <p class="start">Start Shopping / Continue Shopping</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-fab color="primary">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="center" *ngIf="!loggedIn">
   <h1 style="color: blueviolet">Login</h1>
   <br />
   <form [formGroup]="loginForm" (ngSubmit)="onSub()">
