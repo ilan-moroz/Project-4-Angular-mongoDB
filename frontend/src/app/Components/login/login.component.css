@@ -14,7 +14,7 @@ form {
 }
 
 .purple {
-  color: blueviolet;
+  color: blueviolet !important;
 }
 
 .start {
@@ -31,9 +31,12 @@ mat-error {
 
 .custom-card {
   max-width: 400px;
-  margin: 2rem auto;
   padding: 1rem;
-  background: linear-gradient(45deg, #b704f8 30%, #fcff53 90%);
+  border: 2px solid;
+  border-radius: 10px;
+  background: transparent;
+  border-image: linear-gradient(45deg, #b704f8 30%, #fcff53 90%);
+  border-image-slice: 1;
 }
 
 mat-card-actions {
