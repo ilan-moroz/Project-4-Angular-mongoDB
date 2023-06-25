@@ -3,6 +3,8 @@ import { UserModel } from "../Models/Store";
 import { User } from "../Models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+dotenv.config();
 
 const userRouter = express.Router();
 
@@ -19,7 +21,7 @@ userRouter.post(
       .then((customer) => {
         const token = jwt.sign(
           { id: customer._id, email: customer.email },
-          "your_secret_key",
+          process.env.SECRET_KEY!,
           { expiresIn: "2h" }
         );
         res.status(201).json({
@@ -56,7 +58,7 @@ userRouter.post(
       // Generate a new JWT token
       const token = jwt.sign(
         { id: user._id, email: user.email },
-        "your_secret_key",
+        process.env.SECRET_KEY!,
         { expiresIn: "2h" }
       );
       res.status(200).json({
