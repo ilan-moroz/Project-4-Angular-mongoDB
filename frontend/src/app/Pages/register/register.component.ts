@@ -1,5 +1,5 @@
-import { AuthService } from './../../services/auth.service';
-import { UsersService } from './../../services/users.service';
+import { AuthService } from '../../services/auth.service';
+import { UsersService } from '../../services/users.service';
 import { CitiesService } from '../../services/cities.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
