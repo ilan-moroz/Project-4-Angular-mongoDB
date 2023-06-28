@@ -1,4 +1,4 @@
-import { Document, model, Schema, Types } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
 export interface User extends Document {
   firstName: string;
@@ -12,36 +12,31 @@ export interface User extends Document {
 }
 
 export interface Category extends Document {
-  categoryId: string; // Primary key
   categoryName: string;
 }
 
 export interface Product extends Document {
-  productId: string; // Primary key
   productName: string;
-  categoryId: string; // Foreign key referencing Category
+  categoryId: Schema.Types.ObjectId; // Foreign key referencing Category
   price: number;
   imagePath: string;
 }
 
 export interface ShoppingCart extends Document {
-  cartId: string; // Primary key
-  customerId: string; // Foreign key referencing Customer
+  customerId: Schema.Types.ObjectId; // Foreign key referencing Customer
   createdAt: Date;
 }
 
 export interface CartItem extends Document {
-  cartItemId: string; // Primary key
-  productId: string; // Foreign key referencing Product
+  productId: Schema.Types.ObjectId; // Foreign key referencing Product
   quantity: number;
   generalPrice: number;
-  cartId: string; // Foreign key referencing ShoppingCart
+  cartId: Schema.Types.ObjectId; // Foreign key referencing ShoppingCart
 }
 
 export interface Order extends Document {
-  orderId: string; // Primary key
-  customerId: string | null; // Optional foreign key referencing Customer
-  cartId: string; // Foreign key referencing ShoppingCart
+  customerId: Schema.Types.ObjectId | null; // Optional foreign key referencing Customer
+  cartId: Schema.Types.ObjectId; // Foreign key referencing ShoppingCart
   finalPrice: number;
   deliveryCity: string;
   deliveryStreet: string;
@@ -62,36 +57,31 @@ const UserSchema = new Schema<User>({
 });
 
 const CategorySchema = new Schema<Category>({
-  categoryId: { type: String, required: true, unique: true }, // Primary key
   categoryName: { type: String, required: true },
 });
 
 const ProductSchema = new Schema<Product>({
-  productId: { type: String, required: true, unique: true }, // Primary key
   productName: { type: String, required: true },
-  categoryId: { type: String, required: true }, // Foreign key referencing Category
+  categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true }, // Foreign key referencing Category
   price: { type: Number, required: true },
   imagePath: { type: String, required: true },
 });
 
 const ShoppingCartSchema = new Schema<ShoppingCart>({
-  cartId: { type: String, required: true, unique: true }, // Primary key
-  customerId: { type: String, required: true }, // Foreign key referencing Customer
+  customerId: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Foreign key referencing Customer
   createdAt: { type: Date, default: Date.now },
 });
 
 const CartItemSchema = new Schema<CartItem>({
-  cartItemId: { type: String, required: true, unique: true }, // Primary key
-  productId: { type: String, required: true }, // Foreign key referencing Product
+  productId: { type: Schema.Types.ObjectId, ref: "Product", required: true }, // Foreign key referencing Product
   quantity: { type: Number, required: true },
   generalPrice: { type: Number, required: true },
-  cartId: { type: String, required: true }, // Foreign key referencing ShoppingCart
+  cartId: { type: Schema.Types.ObjectId, ref: "ShoppingCart", required: true }, // Foreign key referencing ShoppingCart
 });
 
 const OrderSchema = new Schema<Order>({
-  orderId: { type: String, required: true, unique: true }, // Primary key
-  customerId: { type: String, default: null }, // Optional foreign key referencing Customer
-  cartId: { type: String, required: true }, // Foreign key referencing ShoppingCart
+  customerId: { type: Schema.Types.ObjectId, ref: "User", default: null }, // Optional foreign key referencing Customer
+  cartId: { type: Schema.Types.ObjectId, ref: "ShoppingCart", required: true }, // Foreign key referencing ShoppingCart
   finalPrice: { type: Number, required: true },
   deliveryCity: { type: String, required: true },
   deliveryStreet: { type: String, required: true },
