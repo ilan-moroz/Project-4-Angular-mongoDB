@@ -3,6 +3,7 @@ import { User, UserModel } from "../Models/Store";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
+import { checkExistingUser } from "../services/checkUserService";
 dotenv.config();
 
 export const register = async (req: Request, res: Response) => {
@@ -64,13 +65,6 @@ export const login = async (req: Request, res: Response) => {
 };
 
 // check if email or idNumber already exists in database
-const checkExistingUser = async (email: string, idNumber: number) => {
-  const existingUser = await UserModel.findOne({
-    $or: [{ email: email }, { idNumber: idNumber }],
-  });
-  return existingUser;
-};
-
 export const checkEmailId = async (req: Request, res: Response) => {
   const email = req.params.email;
   const idNumber = +req.params.idNumber;
