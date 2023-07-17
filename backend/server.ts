@@ -18,7 +18,7 @@ server.use(express.json());
 server.use(bodyParser.json());
 
 // How to use routes
-server.use("/api/v1/mongoStore/user", userRouter);
+server.use("/mongoStore/user", userRouter);
 
 // for security
 server.use(helmet());

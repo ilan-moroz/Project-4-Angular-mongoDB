@@ -16,12 +16,12 @@ export class UsersService {
   }
 
   registerAction(user: User) {
-    const api = `http://localhost:4000/api/v1/mongoStore/user/register`;
+    const api = `http://localhost:4000/mongoStore/user/register`;
     return this.http.post<{ customer: User; token: string }>(api, user);
   }
 
   loginAction(email: string, password: string) {
-    const api = `http://localhost:4000/api/v1/mongoStore/user/login`;
+    const api = `http://localhost:4000/mongoStore/user/login`;
     const userCredentials = { email, password };
     return this.http.post<{
       user: { firstName: string; lastName: string };
@@ -30,7 +30,7 @@ export class UsersService {
   }
 
   checkUserAction(email: string, idNumber: number): Observable<boolean> {
-    const api = `http://localhost:4000/api/v1/mongoStore/user/checkEmailId/${email}/${idNumber}`;
+    const api = `http://localhost:4000/mongoStore/user/checkEmailId/${email}/${idNumber}`;
     return this.http
       .get<{ exists: boolean }>(api)
       .pipe(map((response) => response.exists));
